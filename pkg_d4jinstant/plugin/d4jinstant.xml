@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.1" type="plugin" group="system" method="upgrade">
+	<name>D4J - Facebook Instant Article Plugin</name>
+	<creationDate>June 2016</creationDate>
+	<author>MrMeo - D4J Team</author>
+	<authorEmail>trananhmanh89@gmail.com</authorEmail>
+	<authorUrl>http://designforjoomla.com</authorUrl>
+	<copyright>By D4J</copyright>
+	<license>GPLv2 or later</license>
+	<version>1.1.3</version>
+	<description>FaceBook Instant Article Plugin Developed by Mr.Meo D4J Team http://designforjoomla.com</description>
+	<files>
+		<filename plugin="d4jinstant">d4jinstant.php</filename>
+	</files>
+	<scriptfile>script.php</scriptfile>
+</extension>

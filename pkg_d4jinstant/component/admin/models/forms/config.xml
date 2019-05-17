@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="config">
+		<field	name="usergroup" type="usergroup"
+				label="User Group"
+				description="Set User Group that you want to access Import Instant Article function, and Post To Facebook Function." 
+				multiple="true"
+				default = "8" />
+				
+		<field name="style" label="Instant Article Style" type="text" default="default" description="Put your name of style here. Read Facebook document about style of Instant Article." />
+		<field	name="ssl"
+						label="SSL Config"
+						description="Use https or not in Instant Article. Just let plugin automatic detect config from joomla. In some case, your ssl status is not configured by joomla, you should choose manually."
+						type="list"
+						default=""	>
+			<option value="">Auto</option>	
+			<option value="https">Use https</option>
+			<option value="http">Use http</option>	
+		</field>
+				
+
+				
+		<field	name="copyright"
+						label="Copyright" 
+						type="text"
+						description="Put your Website name here. Your copyright will appear at bottom of each article."
+						hint="@Copyright" />
+				
+		<field label="Tracking type" name="tracking_type" type="list">
+			<option value="ga">Google Analytics</option>
+			<option value="custom">Custom code</option>
+		</field>
+		
+		<field label="Google Analytics ID" name="gaid" type="text" hint="Example: UA-123456" showon="tracking_type:ga" />
+		
+		<field	name="tracking_code" 
+						type="textarea" 
+						label="Tracking Code" 
+						description="Put your tracking code here." 
+						hint="&lt;script&gt;...&lt;/script&gt;" 
+						filter="raw"
+						rows="10"
+						cols="5"
+						showon="tracking_type:custom"/>
+		<field	name="ad_type"
+						label="Ad Type"
+						description="Choose your ad type. Set none for not using Ad."
+						type="list"
+						default="none"	>
+			<option value="none">None</option>	
+			<option value="fan">Facebook's Audience Network</option>
+			<option value="iframeurl">Custom Iframe Url</option>	
+			<option value="embed">Custom Embed Code</option>
+		</field>
+				
+		<field	name="ad_size"
+						label="Ad Size"
+						description="Choose your ad size"
+						type="list"
+						default="300,250" 
+						showon="ad_type:fan[OR]ad_type:iframeurl[OR]ad_type:embed" >
+			<option value="300,250">Large (300x250)</option>
+			<option value="320,50">Small (320x50) </option> 
+		</field>
+
+		<field	name="placement_id" 
+						label="Placement ID"
+						description="Put your Facebook's Audience Network Placement ID."
+						type="text"
+						hint="Placement ID..."	
+						showon="ad_type:fan"/>
+				
+		<field	name="iframe_url"
+						label="Custom Iframe Url"
+						type="text"
+						hint="http://adserver/my-ad" 
+						showon="ad_type:iframeurl"/>
+				
+		<field	name="embed_code"
+						label="Custom Embed Code"
+						type="textarea"
+						hint="&lt;script&gt;...&lt;/script&gt;" 
+						filter="raw" 
+						showon="ad_type:embed"
+						rows="10"
+						cols="5"/>						
+								
+	</fieldset>
+	
+	<fieldset name="category">
+		<field name="content_category" 
+					 type="category" 
+					 extension="com_content" 
+					 label="Content Category" 
+					 description="" 
+					 multiple="true"
+		/>
+		
+		<field addfieldpath="/administrator/components/com_k2/elements/" 
+					 name="k2_category" 
+					 type="categoriesmultiple" 
+					 default="" 
+					 label="K2 Category" 
+					 description=""/>	
+		
+		<field addfieldpath="/administrator/components/com_d4jinstant/models/fields/" 
+					 name="zooblogcategory" 
+					 type="zooblogcategory" 
+					 default="" 
+					 multiple="true"
+					 label="Zoo Blog Category" 
+					 description=""/>
+		
+	</fieldset>
+	<fieldset name="method_config">
+		<field type="spacer" name="myspacer1" hr="true" />
+		<field name="use_button" type="radio" default="0" label="Import Button" description="" class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		
+		<field type="spacer" name="myspacer" hr="true" />
+		<field name="rss" type="radio" default="0" label="Use RSS" description="" class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="numitem" showon="rss:1" type="text" default="20" label="Number RSS Item" />
+		
+		<field type="spacer" name="myspacer2" hr="true" />
+		<field name="use_post_button" type="radio" default="0" label="Facebook Post Button" description="You can post link to fanpage" class="btn-group btn-group-yesno">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
+
+</form>

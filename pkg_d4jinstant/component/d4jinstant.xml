@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.1" method="upgrade">
+	<name>COM_D4JINSTANT</name>
+	<author>Mr. Meo</author>
+	<creationDate>2017</creationDate>
+	<copyright>D4J Team</copyright>
+	<license>GPL.v2</license>
+	<authorUrl>designforjoomla.com</authorUrl>
+	<version>1.1.3</version>
+	<description>FaceBook Instant Article Plugin Developed by Mr.Meo D4J Team http://designforjoomla.com</description>
+	<files folder="site">
+		<filename>d4jinstant.php</filename>
+		<filename>controller.php</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+	</files>
+	<administration>
+		<menu link='index.php?option=com_d4jinstant'>COM_D4JINSTANT_MENU</menu>
+		<files folder="admin">
+			<filename>controller.php</filename>
+			<filename>d4jinstant.php</filename>
+			<folder>assets</folder>
+			<folder>helpers</folder>
+			<folder>layouts</folder>
+			<folder>views</folder>
+			<folder>models</folder>
+			<folder>controllers</folder>
+			<folder>vendor</folder>
+		</files>
+		<languages folder="admin/language">
+			<language tag="en-GB">en-GB.com_d4jinstant.ini</language>
+			<language tag="en-GB">en-GB.com_d4jinstant.sys.ini</language>
+		</languages>
+	</administration>
+</extension>
+

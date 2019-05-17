@@ -1,0 +1,21 @@
+
+body {
+    padding-top: 70px; /
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.affix {
+	position: unset;
+}
+
+@media (min-width: 992px) {
+
+.affix {
+  top: 80px;
+  position: fixed;
+}
+
+}
