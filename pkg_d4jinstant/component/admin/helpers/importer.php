@@ -66,18 +66,20 @@ class D4jImporter {
 		ob_start();
 		$instant_article = $this->getInstantArticle($data);
 		$client = $this->getClient();
-		try {
-			$client->importArticle($instant_article, true);
-			$msg = $this->getMessage('Import Facebook Instant Article Successfully!', 'notice');
-		} catch (Exception $e) {
-			try {
-				$client->importArticle($instant_article, false);
-				$msg = $this->getMessage('Import successfully, but your Instant Article is not live yet. You need submit your fanpage to review!', 'warning');
-			} catch (Exception $e) {
-				$msg = $this->getMessage('Could not import the article (' . $e->getMessage() . ')', 'error');
-			}
-		}
-		ob_end_clean();
+		$client->importArticle($instant_article);
+		die('<pre>'.print_r(true, 1).'</pre>');
+		// try {
+		// 	$client->importArticle($instant_article, true);
+		// 	$msg = $this->getMessage('Import Facebook Instant Article Successfully!', 'notice');
+		// } catch (Exception $e) {
+		// 	try {
+		// 		$client->importArticle($instant_article, false);
+		// 		$msg = $this->getMessage('Import successfully, but your Instant Article is not live yet. You need submit your fanpage to review!', 'warning');
+		// 	} catch (Exception $e) {
+		// 		$msg = $this->getMessage('Could not import the article (' . $e->getMessage() . ')', 'error');
+		// 	}
+		// }
+		// ob_end_clean();
 
 		die(json_encode($msg));
 	}

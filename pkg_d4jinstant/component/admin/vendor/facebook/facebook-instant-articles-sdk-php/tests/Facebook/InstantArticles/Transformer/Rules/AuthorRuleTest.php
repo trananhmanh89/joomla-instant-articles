@@ -9,8 +9,9 @@
 namespace Facebook\InstantArticles\Transformer\Rules;
 
 use Facebook\InstantArticles\Parser\Parser;
+use Facebook\Util\BaseHTMLTestCase;
 
-class AuthorRuleTest extends \PHPUnit_Framework_TestCase
+class AuthorRuleTest extends BaseHTMLTestCase
 {
     public function testCreateFromProperties()
     {
@@ -70,7 +71,7 @@ class AuthorRuleTest extends \PHPUnit_Framework_TestCase
         $instantArticle = $parser->parse($html);
         $author = $instantArticle->getHeader()->getAuthors()[0];
 
-        $this->assertEquals($expectedName, $author->getName());
+        $this->assertEqualsHtml($expectedName, $author->getName());
     }
 
     public function testExpectedNameWithoutLink()
@@ -87,6 +88,6 @@ class AuthorRuleTest extends \PHPUnit_Framework_TestCase
         $instantArticle = $parser->parse($html);
         $author = $instantArticle->getHeader()->getAuthors()[0];
 
-        $this->assertEquals($expectedName, $author->getName());
+        $this->assertEqualsHtml($expectedName, $author->getName());
     }
 }

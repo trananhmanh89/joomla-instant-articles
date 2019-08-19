@@ -8,7 +8,9 @@
  */
 namespace Facebook\InstantArticles\Elements;
 
-class H1Test extends \PHPUnit_Framework_TestCase
+use Facebook\Util\BaseHTMLTestCase;
+
+class H1Test extends BaseHTMLTestCase
 {
     public function testRenderEmpty()
     {
@@ -32,7 +34,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithPosition()
@@ -48,7 +50,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithTextAlign()
@@ -64,7 +66,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithPositionAndAlignment()
@@ -81,7 +83,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithUnescapedHTML()
@@ -99,7 +101,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithFormattedText()
@@ -120,7 +122,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithLink()
@@ -130,7 +132,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
                 ->appendText('Some ')
                 ->appendText(
                     Anchor::create()
-                        ->withHRef('http://foo.com')
+                        ->withHref('http://foo.com')
                         ->appendText('link')
                 )
                 ->appendText('.');
@@ -141,7 +143,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWithNestedFormattedText()
@@ -161,7 +163,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
             '</h1>';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderEmptySpace()
@@ -173,7 +175,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = '';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderEmptyNBSP()
@@ -185,7 +187,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = '';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderEmptySpaces()
@@ -197,7 +199,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = '';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderWhiteSpaceChars()
@@ -209,7 +211,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = '';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testRenderEmptyFormatted()
@@ -221,7 +223,7 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = '';
 
         $rendered = $h1->render();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 
     public function testGetPlainText()
@@ -239,6 +241,6 @@ class H1Test extends \PHPUnit_Framework_TestCase
         $expected = 'Some text to be within a paragraph for testing.';
 
         $rendered = $h1->getPlainText();
-        $this->assertEquals($expected, $rendered);
+        $this->assertEqualsHtml($expected, $rendered);
     }
 }

@@ -22,7 +22,7 @@ class PlgSystemD4JInstant extends JPlugin {
 		}
 	}
 
-	function onAfterRoute() {
+	function onAfterDispatch() {
 		$app = JFactory::getApplication();
 		if (!defined('D4JINSTANT_INSTALLED')) {
 			return;

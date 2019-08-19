@@ -13,11 +13,12 @@ use Facebook\InstantArticles\Elements\Image;
 use Facebook\InstantArticles\Elements\Video;
 use Facebook\InstantArticles\Elements\InstantArticle;
 use Facebook\InstantArticles\Elements\AnimatedGIF;
+use PHPUnit\Framework\TestCase;
 
 /**
  *
  */
-class TypeTest extends \PHPUnit_Framework_TestCase
+class TypeTest extends TestCase
 {
 
     /*

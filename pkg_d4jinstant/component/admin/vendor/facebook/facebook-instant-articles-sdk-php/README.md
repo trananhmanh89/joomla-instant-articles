@@ -21,7 +21,7 @@ $ composer require facebook/facebook-instant-articles-sdk-php
 After the installation, you can include the auto loader script in your source with:
 
 ```PHP
-require_once('vendor/autoload.php');
+require_once 'vendor/autoload.php';
 ```
 
 ## Official Documentation
@@ -68,6 +68,11 @@ $ composer dump-autoload
 ___
 **For us to accept contributions you will have to first sign the [Contributor License Agreement](https://code.facebook.com/cla). Please see [CONTRIBUTING](https://github.com/facebook/facebook-instant-articles-sdk-php/blob/master/CONTRIBUTING.md) for details.**
 ___
+## Testing with Docker
+
+We have provide a Docker environment to ensure a consistent testing & development environment.
+
+Use `docker-compose run composer composer install` to get started.
 
 ## Troubleshooting
 
@@ -77,7 +82,7 @@ If you are encountering problems, the following tips may help in troubleshooting
 
 - If content is missing from your transformed article, more likely than not there isn't a **Transformer Rule** matching an element in your source markup. See how to configure appropriate rules for your content in the [Transformer Rules documentation](https://developers.facebook.com/docs/instant-articles/sdk/transformer-rules).
 
-- Set the `threshold` in the [configuration of the Logger](https://logging.apache.org/log4php/docs/configuration.html#PHP) to `DEBUG` to expose more details about the items processed by the Transformer.
+- Set the `threshold` in the transformer Logger level to `DEBUG` to expose more details about the items processed by the Transformer. `TransformerLog::setLevel(TransformerLog::DEBUG);`
 
 - Refer to the existing [tests of the `Elements`](https://github.com/facebook/facebook-instant-articles-sdk-php/tree/master/tests/Facebook/InstantArticles/Elements) for examples of what is required of each and to potentially create your own tests (which can be run with `$ composer test`).
 

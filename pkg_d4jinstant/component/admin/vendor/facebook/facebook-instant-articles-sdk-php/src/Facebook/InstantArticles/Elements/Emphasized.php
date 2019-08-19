@@ -40,10 +40,6 @@ class Emphasized extends FormattedText
             $document = new \DOMDocument();
         }
 
-        if (!$this->isValid()) {
-            return $this->emptyElement($document);
-        }
-
         $emphasized = $document->createElement('em');
 
         $emphasized->appendChild($this->textToDOMDocumentFragment($document));

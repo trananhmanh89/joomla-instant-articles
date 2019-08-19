@@ -32,9 +32,9 @@ use Facebook\InstantArticles\Validators\Type;
   *
 */
 
-class InstantArticle extends Element implements Container, InstantArticleInterface
+class InstantArticle extends Element implements ChildrenContainer, InstantArticleInterface
 {
-    const CURRENT_VERSION = '1.6.0';
+    const CURRENT_VERSION = '1.10.0';
 
     /**
      * The meta properties that are used on <head>
@@ -55,6 +55,21 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
      * @var boolean The ad strategy that will be used. True by default
      */
     private $isAutomaticAdPlaced = true;
+
+    /**
+     * @var string The ad density that will be used. "default" by default
+     */
+    private $adDensity = 'default';
+
+    /**
+     * @var boolean The ad strategy that will be used. False by default
+     */
+    private $isRecirculationAdPlaced = false;
+
+    /**
+     * @var string The ad placement strategy that will be used. Optional
+     */
+    private $adRecirculationPlacement;
 
     /**
      * @var string The charset that will be used. "utf-8" by default.
@@ -98,7 +113,6 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
     /**
      * Private constructor. It must be used the Factory method
      * @see InstantArticle#create() For building objects
-     * @return InstantArticle object.
      */
     private function __construct()
     {
@@ -167,6 +181,52 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
     public function disableAutomaticAdPlacement()
     {
         $this->isAutomaticAdPlaced = false;
+        return $this;
+    }
+
+    /**
+     * Use the strategy of auto recirculation ad placement
+     */
+    public function disableAutomaticRecirculationPlacement()
+    {
+        $this->isRecirculationAdPlaced = false;
+        return $this;
+    }
+
+    /**
+     * Use the strategy of manual recirculation ad placement
+     */
+    public function enableAutomaticRecirculationPlacement()
+    {
+        $this->isRecirculationAdPlaced = true;
+        return $this;
+    }
+
+    /**
+     * Sets the recirculation ad placement to be applied to this Instant Article
+     *
+     * @param string $adRecirculationPlacement Ad placement
+     *
+     * @return $this
+     */
+    public function withRecirculationPlacement($adRecirculationPlacement)
+    {
+        $this->adRecirculationPlacement = $adRecirculationPlacement;
+        return $this;
+    }
+
+    /**
+     * Sets the ad density to be used for auto ad placement
+     *
+     * @param string $adDensity Ad density
+     *
+     * @return $this
+     */
+    public function withAdDensity($adDensity)
+    {
+        Type::enforce($adDensity, Type::STRING);
+        $this->adDensity = $adDensity;
+
         return $this;
     }
 
@@ -418,10 +478,18 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
         return $this;
     }
 
-    public function render($doctype = '<!doctype html>', $format = false)
+    public function getMetaProperty($property_name)
+    {
+        if (array_key_exists($property_name, $this->metaProperties)) {
+            return $this->metaProperties[$property_name];
+        }
+        return null;
+    }
+
+    public function render($doctype = '<!doctype html>', $format = false, $validate = true)
     {
         $doctype = is_null($doctype) ? '<!doctype html>' : $doctype;
-        return parent::render($doctype, $format);
+        return parent::render($doctype, $format, false);
     }
 
     public function toDOMElement($document = null)
@@ -449,9 +517,20 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
 
         $this->addMetaProperty('op:markup_version', $this->markupVersion);
         if ($this->header && count($this->header->getAds()) > 0) {
+            if ($this->isAutomaticAdPlaced) {
+                $this->addMetaProperty(
+                    'fb:use_automatic_ad_placement',
+                    'enable=true ad_density=' . $this->adDensity
+                );
+            } else {
+                $this->addMetaProperty('fb:use_automatic_ad_placement', 'false');
+            }
+        }
+
+        if ($this->header && $this->isRecirculationAdPlaced && $this->adRecirculationPlacement) {
             $this->addMetaProperty(
-                'fb:use_automatic_ad_placement',
-                $this->isAutomaticAdPlaced ? 'true' : 'false'
+                'fb:op-recirculation-ads',
+                $this->adRecirculationPlacement
             );
         }
 
@@ -475,26 +554,24 @@ class InstantArticle extends Element implements Container, InstantArticleInterfa
         $article = $document->createElement('article');
         $body->appendChild($article);
         $html->appendChild($body);
-        if ($this->header && $this->header->isValid()) {
-            $article->appendChild($this->header->toDOMElement($document));
-        }
+        Element::appendChild($article, $this->header, $document);
         if ($this->children) {
             foreach ($this->children as $child) {
                 if (Type::is($child, TextContainer::getClassName())) {
                     if (count($child->getTextChildren()) === 0) {
                         continue;
-                    } elseif (count($child->getTextChildren()) === 1) {
+                    }
+
+                    if (count($child->getTextChildren()) === 1) {
                         if (Type::is($child->getTextChildren()[0], Type::STRING) &&
                             trim($child->getTextChildren()[0]) === '') {
                             continue;
                         }
                     }
                 }
-                $article->appendChild($child->toDOMElement($document));
+                Element::appendChild($article, $child, $document);
             }
-            if ($this->footer && $this->footer->isValid()) {
-                $article->appendChild($this->footer->toDOMElement($document));
-            }
+            Element::appendChild($article, $this->footer, $document);
         } else {
             $article->appendChild($document->createTextNode(''));
         }

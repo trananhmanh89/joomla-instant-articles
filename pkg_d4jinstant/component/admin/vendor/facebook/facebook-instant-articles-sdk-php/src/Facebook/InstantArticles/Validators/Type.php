@@ -62,14 +62,15 @@ class Type
                 self::throwException($var, $types_allowed);
             }
             return false;
-        } else {
-            $result = ($var instanceof $types_allowed) ||
-                self::isPrimitive($var, $types_allowed);
-            if (!$result && $enforce) {
-                self::throwException($var, $types_allowed);
-            }
-            return $result;
         }
+
+        $result = ($var instanceof $types_allowed) ||
+            self::isPrimitive($var, $types_allowed);
+        if (!$result && $enforce) {
+            self::throwException($var, $types_allowed);
+        }
+
+        return $result;
     }
 
 

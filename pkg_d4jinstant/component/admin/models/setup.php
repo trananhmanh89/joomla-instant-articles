@@ -17,7 +17,7 @@ class D4jInstantModelSetup extends JModelLegacy {
         $fb = new Facebook\Facebook([
             'app_id' => $app->getUserState('facebook.appid'),
             'app_secret' => $app->getUserState('facebook.secret'),
-            'default_graph_version' => 'v2.8',
+            'default_graph_version' => 'v4.0',
         ]);
         return $fb;
     }
@@ -98,7 +98,10 @@ class D4jInstantModelSetup extends JModelLegacy {
         }
         
         if (count($page)) {
+            $app = JFactory::getApplication();
             $params = JComponentHelper::getParams('com_d4jinstant');
+            $params->set('appid', $app->getUserState('facebook.appid'));
+            $params->set('secret', $app->getUserState('facebook.secret'));
             $params->set('pageid', $page['id']);
             $params->set('access_token', $page['access_token']);
             $params->set('name', $page['name']);
@@ -107,7 +110,8 @@ class D4jInstantModelSetup extends JModelLegacy {
             $q = 'UPDATE #__extensions SET params = ' . $db->quote($data) . ' WHERE element = "com_d4jinstant"';
             $db->setQuery($q);
             $db->execute();
-            
+            $this->cleanCache('_system', 0);
+            $this->cleanCache('_system', 1);
             return true;
         } else {
             return false;
@@ -121,11 +125,15 @@ class D4jInstantModelSetup extends JModelLegacy {
         $secret = $input->get('secret');
         $app->setUserState('facebook.appid', $appid);
         $app->setUserState('facebook.secret', $secret);
+        $this->cleanCache('_system', 0);
+        $this->cleanCache('_system', 1);
     }
 
     function resetApp() {
         $app = JFactory::getApplication();
         $app->setUserState('facebook.appid', '');
+        $this->cleanCache('_system', 0);
+        $this->cleanCache('_system', 1);
     }
 
 }

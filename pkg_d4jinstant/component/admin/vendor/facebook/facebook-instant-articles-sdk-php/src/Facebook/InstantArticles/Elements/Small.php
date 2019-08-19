@@ -40,10 +40,6 @@ class Small extends TextContainer
             $document = new \DOMDocument();
         }
 
-        if (!$this->isValid()) {
-            return $this->emptyElement($document);
-        }
-
         $small = $document->createElement('small');
 
         $small->appendChild($this->textToDOMDocumentFragment($document));

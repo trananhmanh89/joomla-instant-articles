@@ -22,6 +22,8 @@ class D4jInstantModelConfig extends JModelForm {
 		$params->loadArray($jform);
 		$data = $params->toString('JSON');
 		$this->updateDb($data);
+		$this->cleanCache('_system', 0);
+		$this->cleanCache('_system', 1);
 	}
 
 	function disconnect() {
@@ -36,6 +38,9 @@ class D4jInstantModelConfig extends JModelForm {
 		$params->set('access_token', '');
 		$data = $params->toString('JSON');
 		$this->updateDb($data);
+		$this->cleanCache();
+		$this->cleanCache('_system', 0);
+		$this->cleanCache('_system', 1);
 	}
 
 	function updateDb($data) {

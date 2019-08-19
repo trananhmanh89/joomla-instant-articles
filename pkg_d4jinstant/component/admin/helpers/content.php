@@ -46,9 +46,9 @@ class D4jContent extends D4jBase {
 	function getItem($id) {
 		$db = JFactory::getDbo();
 		$query = 'select u.name author, cat.title category, c.*  from #__content c
-							left join #__categories cat on cat.id = c.catid
-							left join #__users u on u.id = c.created_by
-							where c.id=' . (int) $id;
+			left join #__categories cat on cat.id = c.catid
+			left join #__users u on u.id = c.created_by
+			where c.id=' . (int) $id;
 		$db->setQuery($query);
 		return $db->loadObject();
 	}

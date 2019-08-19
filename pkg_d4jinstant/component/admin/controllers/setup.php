@@ -27,14 +27,13 @@ class D4jInstantControllerSetup extends JControllerLegacy {
 	}
 	
 	function savePage() {
-		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$this->checkToken();
 		$model = $this->getModel();
         
 		if ($model->savePage()) {
             $this->setRedirect('index.php?option=com_d4jinstant&view=config');
         } else {
-        	$app = JFactory::getApplication();
-        	$app->enqueueMessage('You have no page that supports Instant Article. Please sign up new one.')
+        	$this->setMessage('You have no page that supports Instant Article. Please sign up new one.');
             $this->setRedirect('index.php?option=com_d4jinstant&view=setup');
         }
 	}

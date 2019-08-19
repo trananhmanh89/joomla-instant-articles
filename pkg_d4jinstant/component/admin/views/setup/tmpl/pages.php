@@ -73,7 +73,7 @@ defined('_JEXEC') or die;
             appId: '<?php echo $this->appid ?>',
             cookie: true,
             xfbml: true,
-            version: 'v2.12'
+            version: 'v4.0'
         });
 
         FB.AppEvents.logPageView();
